@@ -4,8 +4,7 @@ services:
     image: mysql:5.6
     environment:
       MYSQL_ROOT_PASSWORD: admin
-    env_file:
-      - ./.env
+      MYSQL_DATABASE: scheduler
     ports:
       - '3316:3306'
     volumes_from:
