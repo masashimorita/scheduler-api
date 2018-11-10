@@ -23,4 +23,13 @@ class Message
   def self.expired_token
     'Sorry, your token has expired. Please login to continue...'
   end
+  def self.reset_password_has_requested
+    'Password reset has requested successfully'
+  end
+  def self.password_not_match
+    'Invalid Password was given'
+  end
+  def self.password_reset
+    'Password has reset successfully'
+  end
 end

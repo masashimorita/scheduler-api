@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_10_030342) do
+ActiveRecord::Schema.define(version: 2018_11_10_085031) do
+
+  create_table "remember_tokens", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "code"
+    t.string "email"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "expired_at", null: false
+    t.index ["user_id"], name: "index_remember_tokens_on_user_id"
+  end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email"
@@ -20,4 +30,5 @@ ActiveRecord::Schema.define(version: 2018_11_10_030342) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "remember_tokens", "users"
 end
