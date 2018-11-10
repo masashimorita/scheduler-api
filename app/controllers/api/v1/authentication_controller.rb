@@ -8,14 +8,14 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
 
   def reset_password
     reset_password_params
-    json_response({message: Message.password_not_match}, :internal_server_error) if params[:password] != params[:password_confirm]
-    token = RememberToken.find_by(code: params[:code], email: params[:email])
+    json_response({message: Message.password_not_match}, :internal_server_error) if reset_password_params[:password] != reset_password_params[:password_confirm]
+    token = RememberToken.find_by(code: reset_password_params[:code], email: reset_password_params[:email])
     return json_response({message: Message.not_found("Password Reset Token")}, :not_found) if token.nil?
 
     user = User.find(token.user_id)
     return json_response({message: Message.not_found("User")}, :not_found) if user.nil?
 
-    user.password = params[:password]
+    user.password = reset_password_params[:password]
     user.save!
 
     token.destroy

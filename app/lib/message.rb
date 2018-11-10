@@ -32,4 +32,7 @@ class Message
   def self.password_reset
     'Password has reset successfully'
   end
+  def self.password_change
+    'Password has changed successfully'
+  end
 end

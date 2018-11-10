@@ -10,6 +10,9 @@ class User < ApplicationRecord
                                     format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },
                                     uniqueness: { case_sensitive: false }
 
-
-
+  def change_password!(current_password, new_password)
+    return false unless self.authenticate(current_password)
+    self.password = new_password
+    save!
+  end
 end
