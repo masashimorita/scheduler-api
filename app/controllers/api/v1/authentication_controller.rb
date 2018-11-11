@@ -12,6 +12,8 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
     token = RememberToken.find_by(code: reset_password_params[:code], email: reset_password_params[:email])
     return json_response({message: Message.not_found("Password Reset Token")}, :not_found) if token.nil?
 
+    return json_response({message: Message.reset_token_expired}, :internal_server_error) if token.expired_at.to_datetime < DateTime.now
+
     user = User.find(token.user_id)
     return json_response({message: Message.not_found("User")}, :not_found) if user.nil?
 

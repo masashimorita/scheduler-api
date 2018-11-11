@@ -35,4 +35,7 @@ class Message
   def self.password_change
     'Password has changed successfully'
   end
+  def self.reset_token_expired
+    'Password reset token has expired... Please send a request again'
+  end
 end
