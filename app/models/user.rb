@@ -4,6 +4,8 @@ class User < ApplicationRecord
   has_secure_password
 
   has_many :remember_tokens
+  has_many :records
+  has_many :monthly_reports
 
   validates :name, presence: true, length: { maximum: 50 }
   validates :email, presence: true, length: { maximum: 255 },

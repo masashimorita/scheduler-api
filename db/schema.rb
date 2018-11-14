@@ -10,7 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_10_085031) do
+ActiveRecord::Schema.define(version: 2018_11_14_120647) do
+
+  create_table "monthly_reports", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.text "data"
+    t.float "total_hour"
+    t.integer "total_days"
+    t.float "average_hour"
+    t.integer "period_month"
+    t.integer "period_year"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_monthly_reports_on_user_id"
+  end
+
+  create_table "records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.datetime "start_at"
+    t.datetime "end_at"
+    t.date "record_date"
+    t.float "worked_hour"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["record_date"], name: "index_records_on_record_date"
+    t.index ["user_id"], name: "index_records_on_user_id"
+  end
 
   create_table "remember_tokens", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "code"
@@ -30,5 +55,7 @@ ActiveRecord::Schema.define(version: 2018_11_10_085031) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "monthly_reports", "users"
+  add_foreign_key "records", "users"
   add_foreign_key "remember_tokens", "users"
 end
