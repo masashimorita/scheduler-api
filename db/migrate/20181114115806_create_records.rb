@@ -5,7 +5,7 @@ class CreateRecords < ActiveRecord::Migration[5.2]
       t.datetime :end_at
       t.date :record_date, index: true
       t.float :worked_hour
-      t.references :user, foreign_key: true
+      t.references :user, foreign_key: true, null: false
 
       t.timestamps
     end

@@ -10,15 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_14_120647) do
+ActiveRecord::Schema.define(version: 2018_11_16_132721) do
 
   create_table "monthly_reports", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.text "data"
-    t.float "total_hour"
-    t.integer "total_days"
-    t.float "average_hour"
-    t.integer "period_month"
-    t.integer "period_year"
+    t.text "data", null: false
+    t.float "total_hour", null: false
+    t.integer "total_days", null: false
+    t.float "average_hour", null: false
+    t.integer "period_month", null: false
+    t.integer "period_year", null: false
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 2018_11_14_120647) do
     t.datetime "end_at"
     t.date "record_date"
     t.float "worked_hour"
-    t.bigint "user_id"
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["record_date"], name: "index_records_on_record_date"
@@ -38,21 +38,22 @@ ActiveRecord::Schema.define(version: 2018_11_14_120647) do
   end
 
   create_table "remember_tokens", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "code"
-    t.string "email"
-    t.bigint "user_id"
+    t.string "code", null: false
+    t.string "email", null: false
+    t.bigint "user_id", null: false
+    t.datetime "expired_at", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "expired_at", null: false
     t.index ["user_id"], name: "index_remember_tokens_on_user_id"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "email"
-    t.string "name"
-    t.string "password_digest"
+    t.string "email", null: false
+    t.string "name", null: false
+    t.string "password_digest", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "target_hour"
   end
 
   add_foreign_key "monthly_reports", "users"
