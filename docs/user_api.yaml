@@ -1,0 +1,182 @@
+swagger: '2.0'
+info:
+  description: This document is User API Specification.
+  version: 1.0.0
+  title: User API
+  contact:
+    email: masashi@masacode.co
+# host: faces-rekognition.liquidinc.asia
+basePath: /api/v1
+tags:
+  - name: Users
+    # description: ''
+schemes:
+  - https
+paths:
+  '/signup':
+    post:
+      summary: Create an user
+      tags: 
+        - Users
+      parameters: 
+        - in: body
+          name: user_params
+          required: true
+          schema:
+            $ref: '#/definitions/userParams'
+      responses:
+        '200':
+          description: Get user's info data
+          schema:
+            properties:
+              message:
+                type: string
+                description: message from server
+                example: 'Account created successfully'
+              auth_token: 
+                type: string
+                description: access token for the user
+                example: 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE1NDE5MDc2MDV9.qhHRYQ1vcbHrhS53jwMqpic_i5TxZ5RHzP3zha22e_0'
+  '/users/me':
+    get:
+      summary: Get user's info data
+      tags: 
+        - Users
+      parameters: 
+        - in: header
+          name: access_token
+          description: Authentication token to access resource
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Get user's info data
+          schema:
+            properties:
+              message:
+                type: string
+                description: message from server
+                example: 'Success'
+              user: 
+                type: object
+                description: user info
+                example: {
+                  id: 1,
+                  name: 'example',
+                  email: 'example@example.com',
+                  target_hour: 100
+                }
+  '/users/changepassword':
+    post:
+      summary: Change user's password
+      tags: 
+        - Users
+      parameters: 
+        - in: header
+          name: access_token
+          description: Authentication token to access resource
+          required: true
+          type: string
+        - in: body
+          name: user_params
+          required: true
+          schema:
+            $ref: '#/definitions/passwordParams'
+      responses:
+        '200':
+          description: Get user's info data
+          schema:
+            properties:
+              message:
+                type: string
+                description: message from server
+                example: 'Password has changed successfully'
+  '/users/update':
+    post:
+      summary: Update user's info
+      tags: 
+        - Users
+      parameters: 
+        - in: header
+          name: access_token
+          description: Authentication token to access resource
+          required: true
+          type: string
+        - in: body
+          name: user_params
+          required: true
+          schema:
+            $ref: '#/definitions/updateParams'
+      responses:
+        '200':
+          description: Get user's info data
+          schema:
+            properties:
+              message:
+                type: string
+                description: message from server
+                example: 'Account updated successfully'
+              user: 
+                type: object
+                description: user info
+                example: {
+                  id: 1,
+                  name: 'new name',
+                  email: 'new_email@example.com',
+                  target_hour: 120
+                }
+
+definitions:
+  userParams:
+    description: Parameters for creating user
+    type: object
+    properties:
+      name:
+        type: string
+        description: name for user
+        example: 'example'
+      email:
+        type: string
+        description: email address for user
+        example: 'example@example.com'
+      password: 
+        type: string
+        description: password for user
+        example: 'password'
+      password_confirm:
+        type: string
+        description: password confirmation
+        example: 'password'
+  passwordParams:
+    description: Parameters for updating user's password
+    type: object
+    properties:
+      current_password:
+        type: string
+        description: user's current password
+        example: 'password'
+      password: 
+        type: string
+        description: new password
+        example: 'new password'
+      password_confirm:
+        type: string
+        description: password confirmation
+        example: 'new password'
+  updateParams:
+    description: Parameters for updating user info
+    type: object
+    properties:
+      name:
+        type: string
+        description: user's new name
+        example: 'new name'
+      email: 
+        type: string
+        description: user's new email
+        example: 'new_eamil@example.com'
+      target_hour:
+        type: integer
+        description: monthly target user
+        example: 120
+        

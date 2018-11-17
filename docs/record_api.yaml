@@ -1,0 +1,202 @@
+swagger: '2.0'
+info:
+  description: This document is Record API Specification.
+  version: 1.0.0
+  title: Record API
+  contact:
+    email: masashi@masacode.co
+# host: faces-rekognition.liquidinc.asia
+basePath: /api/v1
+tags:
+  - name: Records
+    description: 'keep track of your work hour every day'
+schemes:
+  - https
+paths:
+  '/records':
+    get:
+      summary: Get all the worked record in month
+      tags: 
+        - Records
+      parameters: 
+        - in: header
+          name: access_token
+          description: Authentication token to access resource
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Returns success message when succeed getting all the records for user
+          schema:
+            properties:
+              message:
+                type: string
+                description: message from server
+                example: 'Success'
+              record: 
+                type: object
+                description: all the records for the user
+                example: [
+                    {id: 1, user_id: 1, record_date: '2018-01-01', start_at: '2018-01-01 12:00:00', end_at: '2018-01-01 20:00:00', worked_hour: 8},
+                    {id: 2, user_id: 1, record_date: '2018-01-02', start_at: '2018-01-02 8:00:00', end_at: '2018-01-01 18:00:00', worked_hour: 10}
+                  ]
+  '/records/{id}':
+    get:
+      summary: Get the specific date's working record
+      tags: 
+        - Records
+      parameters: 
+        - in: header
+          name: access_token
+          description: Authentication token to access resource
+          required: true
+          type: string
+        - in: path
+          name: id
+          description: record's id
+          type: integer
+          required: true
+      responses:
+        '200':
+          description: Returns success message when succeed getting a record
+          schema:
+            properties:
+              message:
+                type: string
+                description: message from server
+                example: 'Success'
+              record: 
+                type: object
+                description: updated record data
+                example: {id: 1, user_id: 1, record_date: '2018-01-01', start_at: '2018-01-01 12:00:00', end_at: '2018-01-01 20:00:00', worked_hour: 8}
+    put:
+      summary: Updates working record 
+      tags: 
+        - Records
+      parameters: 
+        - in: header
+          name: access_token
+          description: Authentication token to access resource
+          required: true
+          type: string
+        - in: path
+          name: id
+          description: record's id
+          type: integer
+          required: true
+        - in: body
+          name: update_data
+          required: true
+          schema:
+            $ref: '#/definitions/recordParams'
+      responses:
+        '200':
+          description: Returns success message when succeed updating record
+          schema:
+            properties:
+              message:
+                type: string
+                description: message from server
+                example: 'Success'
+              record: 
+                type: object
+                description: updated record data
+                example: {id: 1, user_id: 1, record_date: '2018-01-01', start_at: '2018-01-01 8:00:00', end_at: '2018-01-01 19:00:00', worked_hour: 11}
+    delete:
+      summary: Delete working record by id
+      tags: 
+        - Records
+      parameters: 
+        - in: header
+          name: access_token
+          description: Authentication token to access resource
+          required: true
+          type: string
+        - in: path
+          name: id
+          description: record's id
+          type: integer
+          required: true
+      responses:
+        '200':
+          description: Returns success message when succeed deleting record
+          schema:
+            properties:
+              message:
+                type: string
+                description: message from server
+                example: 'working record has successfully deleted'
+  '/records/start':
+    post:
+      summary: Start tracking work hour
+      tags:
+        - Records
+      parameters:
+        - in: header
+          name: access_token
+          description: Authentication token to access resource
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Returns success message when succeed inserting record
+          schema:
+            properties:
+              message:
+                type: string
+                description: message from server
+                example: 'Success'
+              record: 
+                type: object
+                description: created record data
+                example: {id: 1, user_id: 1, record_date: '2018-01-01', start_at: '2018-01-01 12:00:00'}
+  '/records/end':
+    post:
+      summary: Finish tracking work hour
+      tags: 
+        - Records
+      parameters: 
+        - in: header
+          name: access_token
+          description: Authentication token to access resource
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Returns success message when succeed updating record
+          schema:
+            properties:
+              message:
+                type: string
+                description: message from server
+                example: 'Success'
+              record: 
+                type: object
+                description: updated record data
+                example: {id: 1, user_id: 1, record_date: '2018-01-01', start_at: '2018-01-01 12:00:00', end_at: '2018-01-01 20:00:00', worked_hour: 8}
+
+definitions:
+  recordParams:
+    description: Parameters for updating specific working record data
+    type: object
+    properties:
+      start_at:
+        type: string
+        format: datetime
+        description: work start datetime
+        example: '2018-01-01 8:00:00'
+      end_at:
+        type: string
+        format: datetime
+        description: work end datetime
+        example: '2018-01-01 19:00:00'
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        

@@ -1,0 +1,122 @@
+swagger: '2.0'
+info:
+  description: This document is Authetication API Specification.
+  version: 1.0.0
+  title: Authentication API
+  contact:
+    email: masashi@masacode.co
+# host: faces-rekognition.liquidinc.asia
+basePath: /api/v1
+tags:
+  - name: Authentication
+    description: 'Login, Reset Password'
+schemes:
+  - https
+paths:
+  '/auth/login':
+    post:
+      summary: Login to the application
+      tags: 
+        - Authentication
+      parameters: 
+        - in: body
+          name: login_params
+          required: true
+          schema:
+            $ref: '#/definitions/loginParams'
+      responses:
+        '200':
+          description: Returns access token when user login succeed
+          schema:
+            properties:
+              auth_token: 
+                type: string
+                description: access token for the user
+                example: 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE1NDE5MDc2MDV9.qhHRYQ1vcbHrhS53jwMqpic_i5TxZ5RHzP3zha22e_0'
+  '/auth/forgetpassword':
+    post:
+      summary: Send a password reset link to user
+      tags: 
+        - Authentication
+      parameters: 
+        - in: body
+          name: forgot_password_params
+          required: true
+          schema:
+            $ref: '#/definitions/forgotPasswordParams'
+      responses:
+        '200':
+          description: Send password reset mail to user
+          schema:
+            properties:
+              message:
+                type: string
+                description: message
+                example: 'Password reset has requested successfully'
+              code: 
+                type: string
+                description: code for password reset
+                example: 'fe987ffabd27048cb3f0c204c4'
+  '/auth/resetpassword':
+    post:
+      summary: Reset user's password
+      tags: 
+        - Authentication
+      parameters: 
+        - in: body
+          name: reset_password_params
+          required: true
+          schema:
+            $ref: '#/definitions/resetPasswordParams'
+      responses:
+        '200':
+          description: Send password reset mail to user
+          schema:
+            properties:
+              message:
+                type: string
+                description: message
+                example: 'Password has reset successfully'
+
+definitions:
+  loginParams:
+    description: Parameters for login
+    type: object
+    properties:
+      email:
+        type: string
+        description: email address for user
+        example: 'example@example.com'
+      password: 
+        type: string
+        description: password for user
+        example: 'password'
+  resetPasswordParams:
+    description: Parameters for updating user's password
+    type: object
+    properties:
+      email:
+        type: string
+        description: email address for user
+        example: 'example@example.com'
+      code:
+        type: string
+        description: code that was send to user by email
+        example: 'fe987ffabd27048cb3f0c204c4'
+      password: 
+        type: string
+        description: new password
+        example: 'new password'
+      password_confirm:
+        type: string
+        description: password confirmation
+        example: 'new password'
+  forgotPasswordParams:
+    description: Parameters for forgot password
+    type: object
+    properties:
+      email: 
+        type: string
+        description: user's new email
+        example: 'example@example.com'
+        
