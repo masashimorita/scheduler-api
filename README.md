@@ -16,8 +16,8 @@ This application is to manage your work time scheduler and hope to make it bette
 - run following command `docker-compose run web bundle install`
 
 **Step 5 Migrate database structure**
-- Create database by `docker-compose run web rake db:create`
-- Migrate database by `docker-compose run web rake db:migrate`
+- Create database by `docker-compose run web bundle exec rake db:create`
+- Migrate database by `docker-compose run web bundle exec rake db:migrate`
 
 **Step 6 Create a environment file**
 - Create it by `cp .env.example .env`
