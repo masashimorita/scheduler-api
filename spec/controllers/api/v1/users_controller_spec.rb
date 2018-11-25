@@ -62,8 +62,8 @@ RSpec.describe 'Api::V1::UsersController', type: :request do
       get path, headers: {Authorization: "Bearer #{access_token}"}
       body = JSON.parse(response.body)
       expect(response.status).to eq 200
-      expect(body['email']).to eq user.email
-      expect(body['name']).to eq user.name
+      expect(body['user']['email']).to eq user.email
+      expect(body['user']['name']).to eq user.name
     end
   end
 end
