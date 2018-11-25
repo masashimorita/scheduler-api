@@ -29,10 +29,6 @@ paths:
           description: Returns success message when succeed getting all the monthly reports for user
           schema:
             properties:
-              message:
-                type: string
-                description: message from server
-                example: 'Success'
               reports: 
                 type: object
                 description: all the records for the user
@@ -69,10 +65,6 @@ paths:
           description: Returns success message when succeed getting all the monthly reports for user
           schema:
             properties:
-              message:
-                type: string
-                description: message from server
-                example: 'Success'
               report: 
                 type: object
                 description: all the records for the user
@@ -86,3 +78,11 @@ paths:
                       period_month: 1,
                       period_year: 2018,
                     }
+        '404':
+          description: Return this error when reports was not found
+          schema:
+            properties:
+              message:
+                type: string
+                description: error message
+                example: "Couldn't find MonthlyReport with 'id'=0"

@@ -7,6 +7,8 @@ Rails.application.routes.draw do
       post 'signup', to: 'users#create'
       get 'users/me', to: 'users#show'
       post 'users/changepassword', to: 'users#change_password'
+
+      resources :monthly_reports, only: %i[index show]
     end
   end
 end
