@@ -10,7 +10,7 @@ class Api::V1::UsersController < Api::V1::ApiController
 
   def show
     user = User.select(['id', 'name', 'email']).find(current_user.id)
-    json_response(user, :ok)
+    json_response({user: user}, :ok)
   end
 
   def change_password

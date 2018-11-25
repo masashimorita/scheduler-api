@@ -53,10 +53,6 @@ paths:
           description: Get user's info data
           schema:
             properties:
-              message:
-                type: string
-                description: message from server
-                example: 'Success'
               user: 
                 type: object
                 description: user info
