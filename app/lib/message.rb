@@ -2,6 +2,15 @@ class Message
   def self.not_found(record = 'record')
     "Sorry #{record} not found..."
   end
+  def self.created(record = 'record')
+    "#{record} has successfully created"
+  end
+  def self.updated(record = 'record')
+    "#{record} has successfully updated"
+  end
+  def self.deleted(record = 'record')
+    "#{record} has successfully deleted"
+  end
   def self.invalid_credentials
     'Invalid credentials'
   end

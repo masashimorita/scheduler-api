@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 2018_12_03_234826) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "target_hour"
-    t.integer "check_in_period"
+    t.integer "check_in_period", default: 1
   end
 
   add_foreign_key "monthly_reports", "users"
