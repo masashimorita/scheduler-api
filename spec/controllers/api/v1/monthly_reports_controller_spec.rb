@@ -38,7 +38,7 @@ RSpec.describe 'Api::V1::MonthlyReportsController', type: :request do
     it 'give not found error' do
       get path + 0.to_s, params: {}, headers: {Authorization: "Bearer #{access_token}"}
       expect(response.status).to eq 404
-      expect(JSON.parse(response.body)['message']).to eq "Couldn't find MonthlyReport with 'id'=0"
+      expect(JSON.parse(response.body)['message']).to include("Couldn't find MonthlyReport")
     end
 
     it 'give unauthorized error without auth header' do
