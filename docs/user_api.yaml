@@ -37,6 +37,22 @@ paths:
                 type: string
                 description: access token for the user
                 example: 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE1NDE5MDc2MDV9.qhHRYQ1vcbHrhS53jwMqpic_i5TxZ5RHzP3zha22e_0'
+              user:
+                type: object
+                description: created user info
+                properties:
+                  id: 
+                    type: integer
+                    description: user's id
+                    example: 1
+                  email:
+                    type: string
+                    description: user's email
+                    example: 'example@example.com'
+                  name: 
+                    type: string
+                    description: user's nickname
+                    example: 'example'
   '/users/me':
     get:
       summary: Get user's info data
@@ -56,12 +72,27 @@ paths:
               user: 
                 type: object
                 description: user info
-                example: {
-                  id: 1,
-                  name: 'example',
-                  email: 'example@example.com',
-                  target_hour: 100
-                }
+                properties:
+                  id: 
+                    type: integer
+                    description: user's id
+                    example: 1
+                  email:
+                    type: string
+                    description: user's email
+                    example: 'example@example.com'
+                  name: 
+                    type: string
+                    description: user's nickname
+                    example: 'example'
+                  target_hour:
+                    type: integer
+                    description: target working hour per month
+                    example: 120
+                  check_in_period:
+                    type: integer
+                    description: check in period 
+                    example: 15
   '/users/changepassword':
     post:
       summary: Change user's password
@@ -115,12 +146,27 @@ paths:
               user: 
                 type: object
                 description: user info
-                example: {
-                  id: 1,
-                  name: 'new name',
-                  email: 'new_email@example.com',
-                  target_hour: 120
-                }
+                properties:
+                  id: 
+                    type: integer
+                    description: user's id
+                    example: 1
+                  email:
+                    type: string
+                    description: user's email
+                    example: 'example@example.com'
+                  name: 
+                    type: string
+                    description: user's nickname
+                    example: 'example'
+                  target_hour:
+                    type: integer
+                    description: target working hour per month
+                    example: 120
+                  check_in_period:
+                    type: integer
+                    description: check in period 
+                    example: 15
 
 definitions:
   userParams:
@@ -175,4 +221,10 @@ definitions:
         type: integer
         description: monthly target user
         example: 120
+      check_in_period:
+        type: integer
+        description: check in period 
+        example: 15
+        maximum: 60
+        minimum: 0
         

@@ -33,6 +33,26 @@ paths:
                 type: string
                 description: access token for the user
                 example: 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE1NDE5MDc2MDV9.qhHRYQ1vcbHrhS53jwMqpic_i5TxZ5RHzP3zha22e_0'
+              user:
+                type: object
+                description: created user info
+                properties:
+                  id: 
+                    type: integer
+                    description: user's id
+                    example: 1
+                  email:
+                    type: string
+                    description: user's email
+                    example: 'example@example.com'
+                  name: 
+                    type: string
+                    description: user's nickname
+                    example: 'example'
+                  target_hour:
+                    type: integer
+                    description: target working hour per month
+                    example: 120
   '/auth/forgetpassword':
     post:
       summary: Send a password reset link to user

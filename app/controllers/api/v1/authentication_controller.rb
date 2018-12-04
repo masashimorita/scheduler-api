@@ -3,7 +3,7 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
 
   def authenticate
     auth_token = AuthenticateUser.new(auth_params[:email], auth_params[:password]).call
-    user = User.select(['id', 'email', 'name']).find_by(email: auth_params[:email])
+    user = User.select(['id', 'email', 'name', 'target_hour']).find_by(email: auth_params[:email])
     json_response({auth_token: auth_token, user: user})
   end
 
