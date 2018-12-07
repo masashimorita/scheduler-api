@@ -9,7 +9,7 @@ class Api::V1::UsersController < Api::V1::ApiController
   end
 
   def show
-    user = User.select(['id', 'name', 'email', 'target_hour', 'check_in_period']).find(current_user.id)
+    user = User.select(['id', 'name', 'email', 'target_hour', 'check_in_period', 'break_hour']).find(current_user.id)
     json_response({user: user}, :ok)
   end
 

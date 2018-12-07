@@ -93,6 +93,10 @@ paths:
                     type: integer
                     description: check in period 
                     example: 15
+                  break_hour:
+                    type: integer
+                    description: break hour for a day
+                    example: 1
   '/users/changepassword':
     post:
       summary: Change user's password
@@ -167,6 +171,10 @@ paths:
                     type: integer
                     description: check in period 
                     example: 15
+                  break_hour:
+                    type: integer
+                    description: break hour for a day
+                    example: 1
 
 definitions:
   userParams:
@@ -227,4 +235,9 @@ definitions:
         example: 15
         maximum: 60
         minimum: 0
+      break_hour:
+        type: integer
+        description: break hour for a day
+        example: 1
+        minimum: 1
         
