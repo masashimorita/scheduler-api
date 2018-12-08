@@ -7,6 +7,13 @@ Rails.application.routes.draw do
       post 'signup', to: 'users#create'
       get 'users/me', to: 'users#show'
       post 'users/changepassword', to: 'users#change_password'
+
+      resources :records, except: [:create, :new, :edit] do
+        collection do
+          post :start, to: 'records#start'
+          post :end, to: 'records#end'
+        end
+      end
     end
   end
 end
