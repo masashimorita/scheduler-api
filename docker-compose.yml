@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
   db:
     image: mysql:5.6
@@ -6,32 +6,24 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: admin
       MYSQL_DATABASE: scheduler
-    ports:
-      - '3316:3306'
-    volumes_from:
-      - datastore
-
-  datastore:
-    image: busybox
     volumes:
       - scheduler-data:/var/lib/mysql
 
-  web:
-    build: .
-    command: bundle exec rails s -p 3000 -b '0.0.0.0'
-    volumes:
-      - .:/scheduler
-      - bundle_path:/vendor/bundle
-    ports:
-      - "3000:3000"
-    environment:
-      - BUNDLE_PATH=/vendor/bundle
-      - BUNDLE_APP_CONFIG=/scheduler/.bundle
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/app/Dockerfile
     depends_on:
       - db
 
+  web:
+    build:
+      context: .
+      dockerfile: ./docker/web/Dockerfile
+    depends_on:
+      - app
+    ports:
+      - '80:80'
+
 volumes:
-  scheduler-data:
-    driver: local
-  bundle_path:
-    driver: local
+  scheduler-data: {}
