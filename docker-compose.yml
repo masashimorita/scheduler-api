@@ -13,6 +13,12 @@ services:
     build:
       context: .
       dockerfile: ./docker/app/Dockerfile
+    volumes:
+      - .:/var/www/scheduler
+      - bundle_path:/var/www/scheduler/vendor/bundle
+    environment:
+      - BUNDLE_PATH=/var/www/scheduler/vendor/bundle
+      - BUNDLE_APP_CONFIG=/var/www/scheduler/.bundle
     depends_on:
       - db
 
@@ -27,3 +33,4 @@ services:
 
 volumes:
   scheduler-data: {}
+  bundle_path: {}
