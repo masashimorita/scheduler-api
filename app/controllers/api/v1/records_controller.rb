@@ -17,7 +17,6 @@ class Api::V1::RecordsController < Api::V1::ApiController
   end
 
   def end
-    @record = current_user.records.where(record_date: Time.current).first
     return json_response({message: Message.not_found('Record')}, :not_found) if @record.nil?
     check_out_time = Record.calculate_time(check_in: false, period: current_user.check_in_period)
     @record.end_at = check_out_time
