@@ -29,11 +29,7 @@ paths:
           description: Returns success message when succeed getting all the records for user
           schema:
             properties:
-              message:
-                type: string
-                description: message from server
-                example: 'Success'
-              record: 
+              records:
                 type: object
                 description: all the records for the user
                 example: [
@@ -61,10 +57,6 @@ paths:
           description: Returns success message when succeed getting a record
           schema:
             properties:
-              message:
-                type: string
-                description: message from server
-                example: 'Success'
               record: 
                 type: object
                 description: updated record data
@@ -125,7 +117,7 @@ paths:
               message:
                 type: string
                 description: message from server
-                example: 'working record has successfully deleted'
+                example: 'Working record has successfully deleted'
   '/records/start':
     post:
       summary: Start tracking work hour
@@ -142,10 +134,6 @@ paths:
           description: Returns success message when succeed inserting record
           schema:
             properties:
-              message:
-                type: string
-                description: message from server
-                example: 'Success'
               record: 
                 type: object
                 description: created record data
@@ -161,15 +149,22 @@ paths:
           description: Authentication token to access resource
           required: true
           type: string
+        - in: body
+          name: endParams
+          required: true
+          schema:
+            description: Parameters for API endpoint
+            type: object
+            properties:
+              id: 
+                type: integer
+                description: Record ID
+                example: 1
       responses:
         '200':
           description: Returns success message when succeed updating record
           schema:
             properties:
-              message:
-                type: string
-                description: message from server
-                example: 'Success'
               record: 
                 type: object
                 description: updated record data
