@@ -4,5 +4,5 @@ set :stage, :production
 set :rails_env, 'production'
 
 set :migration_role, 'db'
-set :branch, 'develop'
+set :branch, 'production'
 
