@@ -29,25 +29,46 @@ paths:
           description: Returns success message when succeed getting all the monthly reports for user
           schema:
             properties:
-              message:
-                type: string
-                description: message from server
-                example: 'Success'
-              reports: 
-                type: object
-                description: all the records for the user
-                example: [
-                    {
-                      id: 1,
-                      user_id: 1,
-                      data: "{record_date: '2018-01-01' worked_hour: 8},{record_date: '2018-01-02', worked_hour: 10}",
-                      total_hour: 18,
-                      total_days: 2,
-                      average_hour: 9.0,
-                      period_month: 1,
-                      period_year: 2018,
-                    }
-                  ]
+              reports:
+                type: array
+                description: reports that logged in user has
+                items:
+                  type: object
+                  description: all the records for the user
+                  properties:
+                    id:
+                      type: integer
+                      description: report id
+                      example: 1
+                    user_id:
+                      type: integer
+                      description: user's id
+                      example: 1
+                    data: 
+                      type: string
+                      description: records for a specific month
+                      example: "{record_date: '2018-01-01' worked_hour: 8},{record_date: '2018-01-02', worked_hour: 10}"
+                    total_hour:
+                      type: integer
+                      description: total working hour
+                      example: 18
+                    total_days:
+                      type: integer
+                      description: total working days
+                      example: 2
+                    average_hour:
+                      type: number
+                      description: average working hour per day
+                      example: 9.0
+                    period_month:
+                      type: integer
+                      description: created month 
+                      example: 1
+                    period_year:
+                      type: integer
+                      description: created year
+                      example: 2018
+                
   '/monthly_reports/{id}':
     get:
       summary: Get specific month's report for the user
@@ -69,20 +90,47 @@ paths:
           description: Returns success message when succeed getting all the monthly reports for user
           schema:
             properties:
-              message:
-                type: string
-                description: message from server
-                example: 'Success'
-              report: 
+              report:
                 type: object
                 description: all the records for the user
-                example: {
-                      id: 1,
-                      user_id: 1,
-                      data: "{record_date: '2018-01-01' worked_hour: 8},{record_date: '2018-01-02', worked_hour: 10}",
-                      total_hour: 18,
-                      total_days: 2,
-                      average_hour: 9.0,
-                      period_month: 1,
-                      period_year: 2018,
-                    }
+                properties:
+                  id:
+                    type: integer
+                    description: report id
+                    example: 1
+                  user_id:
+                    type: integer
+                    description: user's id
+                    example: 1
+                  data: 
+                    type: string
+                    description: records for a specific month
+                    example: "{record_date: '2018-01-01' worked_hour: 8},{record_date: '2018-01-02', worked_hour: 10}"
+                  total_hour:
+                    type: integer
+                    description: total working hour
+                    example: 18
+                  total_days:
+                    type: integer
+                    description: total working days
+                    example: 2
+                  average_hour:
+                    type: number
+                    description: average working hour per day
+                    example: 9.0
+                  period_month:
+                    type: integer
+                    description: created month 
+                    example: 1
+                  period_year:
+                    type: integer
+                    description: created year
+                    example: 2018
+        '404':
+          description: Return this error when reports was not found
+          schema:
+            properties:
+              message:
+                type: string
+                description: error message
+                example: "Couldn't find MonthlyReport with 'id'=0"

@@ -14,6 +14,7 @@ Rails.application.routes.draw do
           post :end, to: 'records#end'
         end
       end
+      resources :monthly_reports, only: [:index, :show]
     end
   end
 end
