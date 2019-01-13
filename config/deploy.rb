@@ -35,7 +35,7 @@ set :puma_init_active_record, true
 
 # rbenv settings
 set :rbenv_type, :system
-set :rbenv_path, '/usr/local/rbenv'
+set :rbenv_path, '/usr/local/.rbenv'
 set :rbenv_ruby, File.read('.ruby-version').strip
 set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
 set :rbenv_map_bins, %w[rake gem bundle ruby rails puma pumactl]
@@ -82,7 +82,7 @@ namespace :deploy do
   task :initial do
     on roles(:app) do
       # https://qiita.com/hatorijobs/items/8b57f9a89c3bfb442755
-      execute 'chmod 701 /var/www'
+      # execute 'chmod 701 /var/www'
       before 'deploy:restart', 'puma:start'
       invoke 'deploy'
     end
@@ -108,7 +108,7 @@ namespace :deploy do
 
   before :starting,     :check_revision
   before :check,        'setup:config'
-  after  :finishing,    :compile_assets
+  # after  :finishing,    :compile_assets
   after  :finishing,    :cleanup
   after  :migrate,      :seed
 end
