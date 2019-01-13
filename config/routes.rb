@@ -8,7 +8,13 @@ Rails.application.routes.draw do
       get 'users/me', to: 'users#show'
       post 'users/changepassword', to: 'users#change_password'
 
-      resources :monthly_reports, only: %i[index show]
+      resources :records, except: [:create, :new, :edit] do
+        collection do
+          post :start, to: 'records#start'
+          post :end, to: 'records#end'
+        end
+      end
+      resources :monthly_reports, only: [:index, :show]
     end
   end
 end
