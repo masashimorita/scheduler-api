@@ -9,12 +9,12 @@ FactoryBot.define do
     user { default_user }
 
     transient do
-      default_data { "[{date: '2018-11-01', hour: 4}]" }
+      default_data { ([{record_date: Date.today, worked_hour: 4}]).to_json }
       default_total_hour { 4 }
       default_days { 1 }
       default_average_hour { 4 }
-      default_period_month { 11 }
-      default_period_year { 2018 }
+      default_period_month { DateTime.now.month }
+      default_period_year { DateTime.now.year }
       default_user { create(:user) }
     end
   end
