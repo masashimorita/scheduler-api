@@ -22,6 +22,13 @@ class Api::V1::RecordsController < Api::V1::ApiController
     @record.end_at = check_out_time
     @record.worked_hour = @record.calculate_work_hour(break_hour: current_user.break_hour)
     @record.save!
+
+    month, year = Time.current.month, Time.current.year
+    monthly_report = current_user.monthly_reports.where(period_month: month).where(period_year: year).first
+    if monthly_report.blank?
+      monthly_report = current_user.monthly_reports.create!(period_month: month, period_year: year, total_hour: 0, total_days: 0, average_hour: 0, data: [].to_json)
+    end
+    monthly_report.add_daily_report(@record)
     json_response({record: @record})
   end
 

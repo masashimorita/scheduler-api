@@ -18,5 +18,16 @@ RSpec.describe MonthlyReport, type: :model do
       it { is_expected.to validate_presence_of :period_month }
       it { is_expected.to validate_presence_of :period_year }
     end
+
+    describe 'class methods' do
+      let!(:report) { create(:monthly_report) }
+      let!(:record) { create(:record, user: report.user) }
+
+      it 'should add daily record' do
+        report.add_daily_report(record)
+        pp report
+        expect(JSON.parse(report.data).length).to eq 2
+      end
+    end
   end
 end
