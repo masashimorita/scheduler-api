@@ -29,6 +29,67 @@ RSpec.describe 'Api::V1::UsersController', type: :request do
     end
   end
 
+  describe 'PUT /api/v1/users/:id' do
+    let!(:user) { User.create!(name: "TEST", email: "test@test.com", password: "TEST") }
+    let!(:path) { "/api/v1/users/#{user.id}" }
+    let(:access_token) { AuthenticateUser.new(user.email, "TEST").call }
+    let(:new_name) { 'New Name' }
+    let(:valid_email) { 'valid@test.com' }
+    let(:valid_target_hour) { 160 }
+    let(:valid_check_in) { 15 }
+    let(:valid_break_hour) { 2 }
+
+    it 'update name successfully' do
+      put path, params: {name: new_name}, headers: {Authorization: "Bearer #{access_token}"}
+      expect(response.status).to eq 200
+      expect(JSON.parse(response.body)['user']['name']).to eq new_name
+    end
+
+    it 'update email successfully' do
+      put path, params: {email: valid_email}, headers: {Authorization: "Bearer #{access_token}"}
+      expect(response.status).to eq 200
+      expect(JSON.parse(response.body)['user']['email']).to eq valid_email
+    end
+
+    it 'update email fail due to invalid email' do
+      put path, params: {email: 'invalid@test'}, headers: {Authorization: "Bearer #{access_token}"}
+      expect(response.status).to eq 422
+    end
+
+    it 'update target_hour successfully' do
+      put path, params: {target_hour: valid_target_hour}, headers: {Authorization: "Bearer #{access_token}"}
+      expect(response.status).to eq 200
+      expect(JSON.parse(response.body)['user']['target_hour']).to eq valid_target_hour
+    end
+
+    it 'update target_hour fail due to invalid type' do
+      put path, params: {target_hour: 'invalid'}, headers: {Authorization: "Bearer #{access_token}"}
+      expect(response.status).to eq 422
+    end
+
+    it 'update check_in_period successfully' do
+      put path, params: {check_in_period: valid_check_in}, headers: {Authorization: "Bearer #{access_token}"}
+      expect(response.status).to eq 200
+      expect(JSON.parse(response.body)['user']['check_in_period']).to eq valid_check_in
+    end
+
+    it 'update check_in_period fail due to invalid type' do
+      put path, params: {check_in_period: 'test'}, headers: {Authorization: "Bearer #{access_token}"}
+      expect(response.status).to eq 422
+    end
+
+    it 'update break_hour successfully' do
+      put path, params: {break_hour: valid_break_hour}, headers: {Authorization: "Bearer #{access_token}"}
+      expect(response.status).to eq 200
+      expect(JSON.parse(response.body)['user']['break_hour']).to eq valid_break_hour
+    end
+
+    it 'update break_hour fail due to invalid type' do
+      put path, params: {break_hour: 'test'}, headers: {Authorization: "Bearer #{access_token}"}
+      expect(response.status).to eq 422
+    end
+  end
+
   describe 'POST /api/v1/users/changepassword' do
     let(:path) { "/api/v1/users/changepassword" }
     let(:user) { User.create!(name: "TEST", email: "test@test.com", password: "TEST") }
