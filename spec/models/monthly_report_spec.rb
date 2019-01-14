@@ -22,11 +22,21 @@ RSpec.describe MonthlyReport, type: :model do
     describe 'class methods' do
       let!(:report) { create(:monthly_report) }
       let!(:record) { create(:record, user: report.user) }
+      let!(:prev_record) { create(:record, user: report.user, default_start_at: Time.current.yesterday, default_end_at: (Time.current.yesterday + 2.hour), default_worked_hour: 2.0, default_record_date: Time.current.yesterday) }
 
       it 'should add daily record' do
         report.add_daily_report(record)
-        pp report
         expect(JSON.parse(report.data).length).to eq 2
+      end
+
+      it 'should recalculate record' do
+        report.add_daily_report(prev_record)
+        prev_record.worked_hour = prev_record.worked_hour.to_f - 1
+        prev_record.save!
+        previous_total = report.total_hour.to_i
+
+        report.recalculate_report(prev_record, prev_record.record_date)
+        expect(report.total_hour.to_i).to eq previous_total - 1
       end
     end
   end
