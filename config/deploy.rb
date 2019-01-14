@@ -40,6 +40,13 @@ set :rbenv_ruby, File.read('.ruby-version').strip
 set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
 set :rbenv_map_bins, %w[rake gem bundle ruby rails puma pumactl]
 
+# -------- capistrano-whenever ------- #
+set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
+# ------------------------------------ #
+
+set :whenever_roles, :batch
+set :whenever_environment, Proc.new { fetch :stage }
+
 set :linked_dirs, fetch(:linked_dirs, []).push(
     'log',
     'tmp/pids',
