@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       post 'auth/resetpassword', to: 'authentication#reset_password'
       post 'signup', to: 'users#create'
       get 'users/me', to: 'users#show'
+      put 'users/:id', to: 'users#update'
       post 'users/changepassword', to: 'users#change_password'
 
       resources :records, except: [:create, :new, :edit] do

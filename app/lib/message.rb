@@ -17,6 +17,9 @@ class Message
   def self.invalid_token
     'Invalid token'
   end
+  def self.invalid_parameter(params)
+    "Invalid parameter [#{params}] was given"
+  end
   def self.missing_token
     'Missing token'
   end
