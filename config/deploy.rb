@@ -95,6 +95,14 @@ namespace :deploy do
     end
   end
 
+  desc 'Update config with deploy'
+  task :update_config do
+    on roles(:app) do
+      before :check,        'setup:config'
+      invoke 'deploy'
+    end
+  end
+
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
@@ -114,7 +122,6 @@ namespace :deploy do
   end
 
   before :starting,     :check_revision
-  before :check,        'setup:config'
   # after  :finishing,    :compile_assets
   after  :finishing,    :cleanup
   after  :migrate,      :seed

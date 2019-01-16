@@ -27,7 +27,9 @@
 # Ignore database.yml
 /config/database.yml
 
-# Ignore environment file
-/.env
-
+# Ignore gems
 /vendor/bundle/
+
+# Ignore deploy files
+/config/deploy/production.rb
+/config/deploy/staging.rb
