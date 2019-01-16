@@ -11,9 +11,9 @@ class Record < ApplicationRecord
     current.change(min: minutes)
   end
 
-  def calculate_work_hour(break_hour: 1)
+  def calculate_work_hour(break_hour: 1, had_break: true)
     worked_hour = (self.end_at - self.start_at) / 3600
-    worked_hour -= break_hour if worked_hour > break_hour
+    worked_hour -= break_hour if (worked_hour > break_hour) && had_break
     worked_hour
   end
 end

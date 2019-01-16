@@ -19,8 +19,9 @@ class Api::V1::RecordsController < Api::V1::ApiController
   def end
     return json_response({message: Message.not_found('Record')}, :not_found) if @record.nil?
     check_out_time = Record.calculate_time(check_in: false, period: current_user.check_in_period)
+    break_hour = params[:break_hour].present? ? params[:break_hour].to_f : current_user.break_hour.to_f
     @record.end_at = check_out_time
-    @record.worked_hour = @record.calculate_work_hour(break_hour: current_user.break_hour)
+    @record.worked_hour = @record.calculate_work_hour(break_hour: break_hour, had_break: params[:didnt_had_break].blank?)
     @record.save!
 
     get_monthly_report.add_daily_report(@record)
@@ -37,7 +38,8 @@ class Api::V1::RecordsController < Api::V1::ApiController
     if update_params[:end_at].present? && valid_time_string?(update_params[:end_at])
       @record.end_at = Record.calculate_time(check_in: false, current: update_params[:end_at].to_time, period: current_user.check_in_period)
     end
-    @record.worked_hour = @record.calculate_work_hour(break_hour: current_user.break_hour) if @record.end_at.present?
+    break_hour = params[:break_hour].present? ? params[:break_hour].to_f : current_user.break_hour.to_f
+    @record.worked_hour = @record.calculate_work_hour(break_hour: break_hour, had_break: update_params[:didnt_had_break].blank?) if @record.end_at.present?
     @record.save!
     if @record.end_at.present?
       time = update_params[:start_at].present? ? update_params[:start_at].to_time : Time.current
@@ -58,7 +60,7 @@ class Api::V1::RecordsController < Api::V1::ApiController
   end
 
   def update_params
-    params.permit(:id, :start_at, :end_at)
+    params.permit(:id, :start_at, :end_at, :break_hour, :didnt_had_break)
   end
 
   def get_monthly_report(time: Time.current)
