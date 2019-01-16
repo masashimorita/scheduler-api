@@ -160,6 +160,14 @@ paths:
                 type: integer
                 description: Record ID
                 example: 1
+              didnt_had_break:
+                type: boolean
+                description: pass true if you did not have break
+                default: false
+              break_hour:
+                type: number
+                description: ovverride user's break hour
+                example: 2.0
       responses:
         '200':
           description: Returns success message when succeed updating record
@@ -185,6 +193,15 @@ definitions:
         format: datetime
         description: work end datetime
         example: '2018-01-01 19:00:00'
+      didnt_had_break:
+        type: boolean
+        description: pass true if you did not have break
+        default: false
+      break_hour:
+        type: number
+        description: ovverride user's break hour
+        example: 2.0
+
         
         
         
