@@ -14,7 +14,7 @@ set :use_sudo,        false
 set :ssh_options, {
     forward_agent: true,
     user: fetch(:user),
-    keys: %w(~/.ssh/deploy)
+    keys: %w(~/.ssh/scheduler_deploy)
 }
 
 set :deploy_via,      :remote_cache
