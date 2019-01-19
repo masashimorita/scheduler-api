@@ -10,11 +10,11 @@ This application is to manage your work time scheduler and hope to make it bette
 - get master.key and put it in config/
 
 **Step 3 Build docker image**
-- Build docker image by `docker-compose build --build-arg environment=development app web`
+- Build docker image by `docker-compose build`
 
 **Step 4 Migrate database structure**
-- Create database by `docker-compose run web bundle exec rake db:create`
-- Migrate database by `docker-compose run web bundle exec rake db:migrate`
+- Create database by `docker-compose run app bundle exec rake db:create`
+- Migrate database by `docker-compose run app bundle exec rake db:migrate`
 
 **Step 5 Create a environment file**
 - Create it by `cp .env.example .env`
