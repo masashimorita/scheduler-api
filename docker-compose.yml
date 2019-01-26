@@ -15,7 +15,7 @@ services:
     build:
       context: .
       dockerfile: ./docker/app/Dockerfile
-    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    command: bundle exec rails s -p 4000 -b '0.0.0.0'
     volumes:
       - .:/var/www/scheduler
       - bundle_path:/var/www/scheduler/vendor/bundle
@@ -24,8 +24,6 @@ services:
       - BUNDLE_APP_CONFIG=/var/www/scheduler/.bundle
     depends_on:
       - db
-    ports:
-      - "3000:3000"
 
   web:
     build:
