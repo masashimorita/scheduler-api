@@ -15,7 +15,11 @@ Rails.application.routes.draw do
           post :end, to: 'records#end'
         end
       end
-      resources :monthly_reports, only: [:index, :show]
+      resources :monthly_reports, only: [:index, :show] do
+        collection do
+          post :recalculate, to: 'monthly_reports#recalculate'
+        end
+      end
     end
   end
 end
