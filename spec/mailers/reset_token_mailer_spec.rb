@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe ResetTokenMailer, type: :mailer do
   describe "send_mail" do
-    let(:user) { User.create!(email: 'test@test.com', name: 'test', password: 'Test') }
+    let!(:user) { create(:user, default_email: 'test@test.com', default_password: 'test') }
 
     it "renders the headers" do
       code = RememberToken::generate_code(13)

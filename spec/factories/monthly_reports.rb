@@ -9,7 +9,7 @@ FactoryBot.define do
     user { default_user }
 
     transient do
-      default_data { ([{record_date: Date.today, worked_hour: 4}]).to_json }
+      default_data { ([{record_date: Date.today, worked_hour: 4, start_at: Time.current, end_at: Time.current + 4.hours}]).to_json }
       default_total_hour { 4 }
       default_days { 1 }
       default_average_hour { 4 }

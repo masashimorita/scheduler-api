@@ -1,9 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Api::V1::AuthenticationController', type: :request do
-  let(:user) do
-    User.create!(name:"TEST", email: "test@test.com", password: "test")
-  end
+  let!(:user) { create(:user, default_email: 'test@test.com', default_password: 'test') }
   describe 'POST /api/v1/auth/login' do
     let(:path) { "/api/v1/auth/login"}
 

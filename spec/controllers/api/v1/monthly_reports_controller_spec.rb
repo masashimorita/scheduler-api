@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Api::V1::MonthlyReportsController', type: :request do
-  let!(:user) { User.create!(name: "TEST", email: "test@test.com", password: "TEST") }
-  let!(:access_token) { AuthenticateUser.new(user.email, "TEST").call }
+  let!(:user) { create(:user, default_email: 'test@test.com', default_password: 'test') }
+  let!(:access_token) { AuthenticateUser.new(user.email, "test").call }
 
   describe 'GET /api/v1/monthly_reports' do
     let(:path) { "/api/v1/monthly_reports" }

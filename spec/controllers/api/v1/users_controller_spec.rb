@@ -5,7 +5,7 @@ RSpec.describe 'Api::V1::UsersController', type: :request do
     let(:user_params) do
       {
           name: "Test",
-          email: "test@test.com",
+          email: "test_params_#{rand(100)}@test.com",
           password: "test",
       }
     end
@@ -20,7 +20,7 @@ RSpec.describe 'Api::V1::UsersController', type: :request do
     end
 
     it 'Sign up user fail' do
-      post "/api/v1/signup", params: {name: "test", email: "test@test.com"}
+      post "/api/v1/signup", params: {name: "test", email: "test#{rand(100)}@test.com"}
       expect(response.status).to eq 422
     end
 
@@ -30,9 +30,9 @@ RSpec.describe 'Api::V1::UsersController', type: :request do
   end
 
   describe 'PUT /api/v1/users/:id' do
-    let!(:user) { User.create!(name: "TEST", email: "test@test.com", password: "TEST") }
+    let!(:user) { create(:user, default_email: 'test@test.com', default_password: 'test') }
     let!(:path) { "/api/v1/users/#{user.id}" }
-    let(:access_token) { AuthenticateUser.new(user.email, "TEST").call }
+    let(:access_token) { AuthenticateUser.new(user.email, "test").call }
     let(:new_name) { 'New Name' }
     let(:valid_email) { 'valid@test.com' }
     let(:valid_target_hour) { 160 }
@@ -92,11 +92,11 @@ RSpec.describe 'Api::V1::UsersController', type: :request do
 
   describe 'POST /api/v1/users/changepassword' do
     let(:path) { "/api/v1/users/changepassword" }
-    let(:user) { User.create!(name: "TEST", email: "test@test.com", password: "TEST") }
-    let(:access_token) { AuthenticateUser.new(user.email, "TEST").call }
+    let!(:user) { create(:user, default_email: 'test@test.com', default_password: 'test') }
+    let(:access_token) { AuthenticateUser.new(user.email, "test").call }
 
     it 'Change password successfully' do
-      post path, params: {current_password: "TEST", password: "password", password_confirm: "password"}, headers: {Authorization: "Bearer #{access_token}"}
+      post path, params: {current_password: "test", password: "password", password_confirm: "password"}, headers: {Authorization: "Bearer #{access_token}"}
       expect(response.status).to eq 200
       expect(JSON.parse(response.body)['message']).to eq 'Password has changed successfully'
     end
@@ -116,8 +116,8 @@ RSpec.describe 'Api::V1::UsersController', type: :request do
 
   describe 'GET /api/v1/users/me' do
     let(:path) { "/api/v1/users/me" }
-    let(:user) { User.create!(name: "TEST", email: "test@test.com", password: "TEST") }
-    let(:access_token) { AuthenticateUser.new(user.email, "TEST").call }
+    let!(:user) { create(:user, default_email: 'test@test.com', default_password: 'test') }
+    let(:access_token) { AuthenticateUser.new(user.email, "test").call }
 
     it 'Get user info' do
       get path, headers: {Authorization: "Bearer #{access_token}"}

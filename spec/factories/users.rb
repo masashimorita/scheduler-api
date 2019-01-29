@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :user do
-    email { default_email }
+    sequence(:email) {|i| i.to_s + default_email }
     name { default_name }
     password { default_password }
     target_hour { default_target_hour }
