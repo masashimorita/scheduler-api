@@ -134,3 +134,63 @@ paths:
                 type: string
                 description: error message
                 example: "Couldn't find MonthlyReport with 'id'=0"
+  '/monthly_reports/recalculate':
+    post:
+      summary: recalculate report for specific month
+      tags:
+        - Monthly Reports
+      parameters:
+        - in: header
+          name: access_token
+          description: Authentication token to access resource
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Returns success message when succeed getting all the monthly reports for user
+          schema:
+            properties:
+              report:
+                type: object
+                description: all the records for the user
+                properties:
+                  id:
+                    type: integer
+                    description: report id
+                    example: 1
+                  user_id:
+                    type: integer
+                    description: user's id
+                    example: 1
+                  data:
+                    type: string
+                    description: records for a specific month
+                    example: "{record_date: '2018-01-01' worked_hour: 8},{record_date: '2018-01-02', worked_hour: 10}"
+                  total_hour:
+                    type: integer
+                    description: total working hour
+                    example: 18
+                  total_days:
+                    type: integer
+                    description: total working days
+                    example: 2
+                  average_hour:
+                    type: number
+                    description: average working hour per day
+                    example: 9.0
+                  period_month:
+                    type: integer
+                    description: created month
+                    example: 1
+                  period_year:
+                    type: integer
+                    description: created year
+                    example: 2018
+        '404':
+          description: Return this error when reports was not found
+          schema:
+            properties:
+              message:
+                type: string
+                description: error message
+                example: "Couldn't find MonthlyReport with 'id'=0"
