@@ -1,4 +1,4 @@
-## Scheduler Server Applciation 
+## scheduler-api 
 This application is to manage your work time scheduler and hope to make it better for you
 
 ## Setting up project
